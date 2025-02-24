@@ -14,3 +14,19 @@ const (
 	HttpUnauthorized  StatusCode = 401
 	HttpForbidden     StatusCode = 403
 )
+
+type HttpHeader string
+
+func (h HttpHeader) Is(header HttpHeader) bool {
+	return h == header
+}
+
+var CustomHttpHeader = struct {
+	Authorization HttpHeader
+
+	Oss_Bucket HttpHeader
+}{
+	Authorization: "Authorization",
+
+	Oss_Bucket: "oss_Bucket",
+}

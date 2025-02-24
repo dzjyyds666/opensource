@@ -13,12 +13,9 @@ type CaptchaServer struct {
 func GetCaptcha(height, width, length, dotCount int, maxSkew float64) (captchaServer *CaptchaServer, err error) {
 
 	driver := base64Captcha.NewDriverDigit(height, width, length, maxSkew, dotCount)
-
 	store := base64Captcha.DefaultMemStore
-
 	//生成图形验证码
 	captcha := base64Captcha.NewCaptcha(driver, store)
-
 	id, b64s, answer, err := captcha.Generate()
 	if err != nil {
 		return nil, err
