@@ -6,14 +6,34 @@ func (sc StatusCode) Is(statusCode StatusCode) bool {
 	return sc == statusCode
 }
 
-const (
-	HttpOK            StatusCode = 200
-	HttpBadRequest    StatusCode = 400
-	HttpNotFound      StatusCode = 404
-	HttpInternalError StatusCode = 500
-	HttpUnauthorized  StatusCode = 401
-	HttpForbidden     StatusCode = 403
-)
+func (sc StatusCode) Int() int16 {
+	return int16(sc)
+}
+
+//const (
+//	HttpOK            StatusCode = 200
+//	HttpBadRequest    StatusCode = 400
+//	HttpNotFound      StatusCode = 404
+//	HttpInternalError StatusCode = 500
+//	HttpUnauthorized  StatusCode = 401
+//	HttpForbidden     StatusCode = 403
+//)
+
+var HttpStatusCode = struct {
+	HttpOK            StatusCode
+	HttpBadRequest    StatusCode
+	HttpNotFound      StatusCode
+	HttpInternalError StatusCode
+	HttpUnauthorized  StatusCode
+	HttpForbidden     StatusCode
+}{
+	HttpOK:            200,
+	HttpBadRequest:    400,
+	HttpNotFound:      404,
+	HttpInternalError: 500,
+	HttpUnauthorized:  401,
+	HttpForbidden:     403,
+}
 
 type HttpHeader string
 
