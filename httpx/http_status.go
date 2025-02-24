@@ -21,6 +21,10 @@ func (h HttpHeader) Is(header HttpHeader) bool {
 	return h == header
 }
 
+func (h HttpHeader) String() string {
+	return string(h)
+}
+
 var CustomHttpHeader = struct {
 	Authorization HttpHeader
 
