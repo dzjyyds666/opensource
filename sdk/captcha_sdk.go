@@ -1,4 +1,4 @@
-package captcah
+package sdk
 
 import (
 	"github.com/mojocn/base64Captcha"
