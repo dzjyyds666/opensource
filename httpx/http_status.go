@@ -48,9 +48,13 @@ func (h HttpHeader) String() string {
 var CustomHttpHeader = struct {
 	Authorization HttpHeader
 
-	Oss_Bucket HttpHeader
+	Oss_Bucket    HttpHeader
+	Oss_Directory HttpHeader
+	Oss_RegionId  HttpHeader
 }{
 	Authorization: "Authorization",
 
-	Oss_Bucket: "oss_Bucket",
+	Oss_Bucket:    "Oss_Bucket",
+	Oss_Directory: "Oss_Directory",
+	Oss_RegionId:  "Oss_RegionId",
 }
