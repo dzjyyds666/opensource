@@ -10,15 +10,6 @@ func (sc StatusCode) Int() int16 {
 	return int16(sc)
 }
 
-//const (
-//	HttpOK            StatusCode = 200
-//	HttpBadRequest    StatusCode = 400
-//	HttpNotFound      StatusCode = 404
-//	HttpInternalError StatusCode = 500
-//	HttpUnauthorized  StatusCode = 401
-//	HttpForbidden     StatusCode = 403
-//)
-
 var HttpStatusCode = struct {
 	HttpOK            StatusCode
 	HttpBadRequest    StatusCode

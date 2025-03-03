@@ -5,7 +5,11 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func createJwtToken(secretKey string, jsondata []byte) (string, error) {
+var (
+	ErrTokenIsInvalid = errors.New("token is invalid")
+)
+
+func CreateJwtToken(secretKey string, jsondata []byte) (string, error) {
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"data": string(jsondata),
 	})
@@ -18,7 +22,7 @@ func createJwtToken(secretKey string, jsondata []byte) (string, error) {
 	return signedString, nil
 }
 
-func parseJwtToken(secretKey string, tokenString string) (string, error) {
+func ParseJwtToken(secretKey string, tokenString string) (string, error) {
 	// 解析并验证令牌
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return secretKey, nil
@@ -31,5 +35,5 @@ func parseJwtToken(secretKey string, tokenString string) (string, error) {
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		return claims["data"].(string), nil
 	}
-	return "", errors.New("token is invalid")
+	return "", ErrTokenIsInvalid
 }
