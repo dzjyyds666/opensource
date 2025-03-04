@@ -13,6 +13,7 @@ func (sc StatusCode) Int() int16 {
 var HttpStatusCode = struct {
 	HttpOK            StatusCode
 	HttpBadRequest    StatusCode
+	HttpParamsError   StatusCode
 	HttpNotFound      StatusCode
 	HttpInternalError StatusCode
 	HttpUnauthorized  StatusCode
@@ -21,6 +22,7 @@ var HttpStatusCode = struct {
 	HttpOK:            200,
 	HttpBadRequest:    400,
 	HttpNotFound:      404,
+	HttpParamsError:   422,
 	HttpInternalError: 500,
 	HttpUnauthorized:  401,
 	HttpForbidden:     403,
