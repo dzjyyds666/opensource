@@ -8,10 +8,10 @@ type HttpResponse struct {
 	Data       interface{} `json:"data"`
 }
 
-func JsonResponse(ctx echo.Context, statusCode StatusCode, msg string, data ...interface{}) error {
+func JsonResponse(ctx echo.Context, statusCode StatusCode, msg *string, data ...interface{}) error {
 	return ctx.JSON(statusCode.Int(), HttpResponse{
 		statusCode,
-		msg,
+		*msg,
 		data,
 	})
 }
