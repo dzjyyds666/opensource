@@ -6,8 +6,8 @@ func (sc StatusCode) Is(statusCode StatusCode) bool {
 	return sc == statusCode
 }
 
-func (sc StatusCode) Int() int16 {
-	return int16(sc)
+func (sc StatusCode) Int() int {
+	return int(sc)
 }
 
 var HttpStatusCode = struct {
