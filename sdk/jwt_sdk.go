@@ -2,7 +2,9 @@ package sdk
 
 import (
 	"errors"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"time"
 )
 
 var (
@@ -10,30 +12,36 @@ var (
 )
 
 func CreateJwtToken(secretKey string, jsondata []byte) (string, error) {
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+	claims := jwt.MapClaims{
 		"data": string(jsondata),
-	})
-
-	// 使用密钥签名并获取完整的编码令牌作为字符串
-	signedString, err := claims.SignedString(secretKey)
-	if nil != err {
-		return "", err
+		"exp":  time.Now().Add(time.Hour * 24 * 3).Unix(),
+		"iat":  time.Now().Unix(),
+		"iss":  "learnx",
 	}
-	return signedString, nil
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString([]byte(secretKey))
 }
 
-func ParseJwtToken(secretKey string, tokenString string) (string, error) {
-	// 解析并验证令牌
+func ParseJwtToken(secretKey string, tokenString string) (*jwt.MapClaims, error) {
+	// 解析 Token
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return secretKey, nil
+		// 确保使用的是相同的签名算法
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte(secretKey), nil
 	})
-	if nil != err {
-		return "", err
+
+	// 检查解析结果
+	if err != nil {
+		return nil, err
 	}
 
-	// 检查令牌是否正确
+	// 验证 Token 是否有效
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		return claims["data"].(string), nil
+		return &claims, nil
+	} else {
+		return nil, fmt.Errorf("invalid token")
 	}
-	return "", ErrTokenIsInvalid
 }
