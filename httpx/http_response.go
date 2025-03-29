@@ -2,6 +2,7 @@ package httpx
 
 import (
 	"github.com/labstack/echo"
+	"net/http"
 	"time"
 )
 
@@ -13,6 +14,15 @@ type HttpResponse struct {
 }
 
 func JsonResponse(ctx echo.Context, statusCode StatusCode, data interface{}) error {
+	return ctx.JSON(http.StatusOK, HttpResponse{
+		StatusCode: statusCode,
+		Data:       data,
+		Ts:         time.Now().Unix(),
+		Url:        ctx.Request().URL.Path,
+	})
+}
+
+func JsonResponseWithErr(ctx echo.Context, statusCode StatusCode, data interface{}) error {
 	return ctx.JSON(statusCode.Int(), HttpResponse{
 		StatusCode: statusCode,
 		Data:       data,
